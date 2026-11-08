@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RULETA MINTUR</title>
+    <!-- Importar la fuente ANTON desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -14,51 +16,51 @@
         }
 
         body {
-            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-family: 'Anton', sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            /* Carga tu imagen de fondo (fondo.png) */
-            background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.35)),
+            justify-content: space-evenly;
+            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)),
                         url('fondo.png') no-repeat center center;
             background-size: cover;
             overflow: hidden;
-            padding: 20px 10px;
+            padding: 10px;
             color: white;
         }
 
-        /* Título superior colocado por código */
         .header-title {
-            font-size: clamp(2.5rem, 8vw, 4.2rem);
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(2.8rem, 9vw, 4.5rem);
             color: #ffffff;
             text-align: center;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-shadow: 
-                3px 3px 0px #000,
-                -3px -3px 0px #000,
-                3px -3px 0px #000,
-                -3px 3px 0px #000,
-                0px 6px 14px rgba(0,0,0,0.8);
-            margin-top: 15px;
+                4px 4px 0px #000,
+                -2px -2px 0px #000,
+                2px -2px 0px #000,
+                -2px 2px 0px #000,
+                0px 6px 15px rgba(0,0,0,0.8);
             text-transform: uppercase;
+            margin-top: 5px;
+            white-space: nowrap;
         }
 
         .wheel-container {
             position: relative;
-            width: min(88vw, 420px);
-            height: min(88vw, 420px);
-            margin: auto 0;
+            width: min(92vw, 460px);
+            height: min(92vw, 460px);
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 5px 0;
         }
 
-        /* Flecha verde colocada por código arriba de la ruleta */
+        /* Puntero/Flecha indicadora superior */
         .pointer {
             position: absolute;
-            top: -26px;
+            top: -24px;
             left: 50%;
             transform: translateX(-50%);
             width: 50px;
@@ -67,30 +69,27 @@
             filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.8));
         }
 
-        /* Ruleta PNG cargada y lista para girar */
-        .wheel-img {
+        canvas {
             width: 100%;
             height: 100%;
-            object-fit: contain;
             border-radius: 50%;
-            filter: drop-shadow(0px 10px 25px rgba(0,0,0,0.85));
-            transition: transform 0s;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.85), 0 0 0 4px rgba(255,255,255,0.3);
         }
 
         .controls {
-            margin-bottom: 25px;
             width: 100%;
             display: flex;
             justify-content: center;
+            margin-bottom: 10px;
         }
 
         .spin-btn {
             background: linear-gradient(180deg, #ffd700 0%, #ff8800 100%);
             border: 3px solid #ffffff;
             color: #000000;
-            font-family: 'Impact', sans-serif;
-            font-size: 1.8rem;
-            padding: 14px 50px;
+            font-family: 'Anton', sans-serif;
+            font-size: 2rem;
+            padding: 12px 55px;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 6px 20px rgba(0,0,0,0.7), inset 0 2px 0 rgba(255,255,255,0.8);
@@ -111,7 +110,7 @@
             box-shadow: none;
         }
 
-        /* Modal emergente con el resultado */
+        /* Modal de resultado */
         .modal {
             display: none;
             position: fixed;
@@ -142,18 +141,19 @@
         }
 
         .modal-title {
+            font-family: Arial, sans-serif;
             font-size: 1.3rem;
             color: #94a3b8;
             margin-bottom: 10px;
-            font-family: Arial, sans-serif;
         }
 
         .modal-result {
-            font-size: 2.2rem;
+            font-family: 'Anton', sans-serif;
+            font-size: 2.3rem;
             color: #ffffff;
             margin: 15px 0;
             text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-            line-height: 1.2;
+            letter-spacing: 1px;
         }
 
         .close-btn {
@@ -161,8 +161,8 @@
             color: #000;
             border: none;
             padding: 12px 32px;
-            font-size: 1.2rem;
-            font-family: 'Impact', sans-serif;
+            font-size: 1.3rem;
+            font-family: 'Anton', sans-serif;
             border-radius: 30px;
             cursor: pointer;
             margin-top: 15px;
@@ -174,15 +174,13 @@
     <h1 class="header-title">RULETA MINTUR</h1>
 
     <div class="wheel-container">
-        <!-- SVG de la flecha indicadora verde de tu diseño -->
         <svg class="pointer" viewBox="0 0 60 60">
             <polygon points="30,55 5,10 55,10" fill="#ffffff" stroke="#2d5a27" stroke-width="8" stroke-linejoin="round"/>
             <polygon points="30,48 10,13 50,13" fill="#ffffff"/>
             <polygon points="30,40 16,16 44,16" fill="none" stroke="#2d5a27" stroke-width="4"/>
         </svg>
         
-        <!-- Imagen de tu ruleta PNG -->
-        <img id="wheelImg" class="wheel-img" src="ruleta.png" alt="Ruleta Mintur">
+        <canvas id="canvas" width="800" height="800"></canvas>
     </div>
 
     <div class="controls">
@@ -200,33 +198,33 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
-        const wheelImg = document.getElementById('wheelImg');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
         const spinBtn = document.getElementById('spinBtn');
         const modal = document.getElementById('resultModal');
         const resultText = document.getElementById('resultText');
 
-        // Los 12 sectores ordenados exactamente en sentido horario tal como están en tu imagen
+        // Configuración exacta de los sectores y colores de tu diseño
         const slices = [
-            { text: "NADA", type: "nada" },
-            { text: "Trabalenguas súper difícil", type: "reto" },
-            { text: "PREMIO 2", type: "premio2" },
-            { text: "PREGUNTA", type: "pregunta" },
-            { text: "Trabalenguas", type: "reto" },
-            { text: "ACENTO VIAJERO", type: "reto" },
-            { text: "NADA", type: "nada" },
-            { text: "Intenta de nuevo", type: "nada" },
-            { text: "PREMIO 1", type: "premio1" },
-            { text: "PREGUNTA", type: "pregunta" },
-            { text: "Maleta express", type: "reto" },
-            { text: "CANCIÓN VENEZOLANA", type: "reto" }
+            { text: ["NADA"], color: "#e31e24", type: "nada" },
+            { text: ["Trabalenguas", "súper difícil"], color: "#ff7900", type: "reto" },
+            { text: ["PREMIO 2"], color: "#ffeb00", type: "premio2" },
+            { text: ["PREGUNTA"], color: "#009944", type: "pregunta" },
+            { text: ["Trabalenguas"], color: "#1d4099", type: "reto" },
+            { text: ["ACENTO", "VIAJERO"], color: "#7e2382", type: "reto" },
+            { text: ["NADA"], color: "#e31e24", type: "nada" },
+            { text: ["Intenta", "de nuevo"], color: "#ff7900", type: "nada" },
+            { text: ["PREMIO 1"], color: "#ffeb00", type: "premio1" },
+            { text: ["PREGUNTA"], color: "#009944", type: "pregunta" },
+            { text: ["Maleta", "express"], color: "#1d4099", type: "reto" },
+            { text: ["CANCIÓN", "VENEZOLANA"], color: "#7e2382", type: "reto" }
         ];
 
         const totalSlices = slices.length;
-        const sliceAngle = 360 / totalSlices;
-        let currentRotation = 0;
+        const sliceAngle = (2 * Math.PI) / totalSlices;
+        let currentAngle = 0;
         let isSpinning = false;
 
-        // Sonidos Web Audio API
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playTick() {
@@ -260,12 +258,78 @@
             });
         }
 
-        // Lógica de probabilidades (5% premios, 35% nada/intenta, 60% retos/preguntas)
+        function drawWheel() {
+            const width = canvas.width;
+            const center = width / 2;
+            const radius = center - 16;
+
+            ctx.clearRect(0, 0, width, width);
+
+            // Borde exterior oscuro
+            ctx.beginPath();
+            ctx.arc(center, center, radius + 12, 0, 2 * Math.PI);
+            ctx.fillStyle = '#0f172a';
+            ctx.fill();
+
+            for (let i = 0; i < totalSlices; i++) {
+                const angle = currentAngle + i * sliceAngle;
+
+                // Dibujar sector de color
+                ctx.beginPath();
+                ctx.moveTo(center, center);
+                ctx.arc(center, center, radius, angle, angle + sliceAngle);
+                ctx.closePath();
+                ctx.fillStyle = slices[i].color;
+                ctx.fill();
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = '#ffffff';
+                ctx.stroke();
+
+                // Dibujar texto con borde negro grueso y sombra para legibilidad total
+                ctx.save();
+                ctx.translate(center, center);
+                ctx.rotate(angle + sliceAngle / 2);
+                ctx.textAlign = "right";
+
+                const lines = slices[i].text;
+                const fontSize = lines.length > 1 ? 24 : 29;
+                ctx.font = `bold ${fontSize}px 'Anton', Arial, sans-serif`;
+
+                const textRadius = radius - 32;
+
+                lines.forEach((line, lineIndex) => {
+                    const yOffset = (lineIndex - (lines.length - 1) / 2) * (fontSize + 4);
+
+                    // Contorno negro muy grueso para resaltar sobre cualquier color
+                    ctx.lineWidth = 6;
+                    ctx.strokeStyle = "#000000";
+                    ctx.lineJoin = "round";
+                    ctx.strokeText(line, textRadius, yOffset);
+
+                    // Relleno blanco
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillText(line, textRadius, yOffset);
+                });
+
+                ctx.restore();
+            }
+
+            // Círculo central blanco
+            ctx.beginPath();
+            ctx.arc(center, center, 42, 0, 2 * Math.PI);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#333333';
+            ctx.stroke();
+        }
+
+        // Probabilidades: 5% premios, 35% nada, 60% retos
         function seleccionarIndiceGanador() {
             const rand = Math.random() * 100;
 
             if (rand < 5) {
-                return Math.random() < 0.5 ? 8 : 2; // PREMIO 1 o PREMIO 2
+                return Math.random() < 0.5 ? 8 : 2; 
             } else if (rand < 40) {
                 const nadaIndices = [0, 6, 7];
                 return nadaIndices[Math.floor(Math.random() * nadaIndices.length)];
@@ -283,14 +347,14 @@
             spinBtn.disabled = true;
 
             const targetIndex = seleccionarIndiceGanador();
+            const targetSliceAngle = targetIndex * sliceAngle + sliceAngle / 2;
+            let targetAngle = (3 * Math.PI / 2) - targetSliceAngle;
             
-            // Ángulo para centrar la casilla bajo la flecha de arriba
-            const targetSliceCenter = targetIndex * sliceAngle + sliceAngle / 2;
-            let targetDegree = 360 - targetSliceCenter;
-            
-            // Añadir 6 vueltas completas
-            const extraRounds = 6 * 360;
-            const finalRotation = currentRotation + (360 - (currentRotation % 360)) + extraRounds + targetDegree;
+            const extraRounds = 6 + Math.floor(Math.random() * 3);
+            targetAngle += extraRounds * 2 * Math.PI;
+
+            const startAngle = currentAngle % (2 * Math.PI);
+            const totalRotation = targetAngle - startAngle;
 
             const duration = 4800;
             const startTime = performance.now();
@@ -299,26 +363,24 @@
             function animate(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                
-                // Animación suave de desaceleración (Ease-out)
                 const easeOut = 1 - Math.pow(1 - progress, 3);
                 
-                const degrees = currentRotation + (finalRotation - currentRotation) * easeOut;
-                wheelImg.style.transform = `rotate(${degrees}deg)`;
+                currentAngle = startAngle + totalRotation * easeOut;
 
-                // Sonido de ticks al pasar cada casilla
-                const currentPointerAngle = (360 - (degrees % 360)) % 360;
-                const currentSlice = Math.floor(currentPointerAngle / sliceAngle);
+                const currentPointerAngle = (3 * Math.PI / 2 - currentAngle) % (2 * Math.PI);
+                const normalizedPointerAngle = (currentPointerAngle + 2 * Math.PI) % (2 * Math.PI);
+                const currentSlice = Math.floor(normalizedPointerAngle / sliceAngle);
 
                 if (currentSlice !== lastTickSlice) {
                     playTick();
                     lastTickSlice = currentSlice;
                 }
 
+                drawWheel();
+
                 if (progress < 1) {
                     requestAnimationFrame(animate);
                 } else {
-                    currentRotation = finalRotation;
                     finalizarGiro(slices[targetIndex]);
                 }
             }
@@ -330,7 +392,7 @@
             isSpinning = false;
             spinBtn.disabled = false;
 
-            resultText.innerText = resultado.text;
+            resultText.innerText = resultado.text.join(' ');
             
             if (resultado.type.includes('premio')) {
                 playWinSound();
@@ -347,6 +409,8 @@
         function cerrarModal() {
             modal.style.display = 'none';
         }
+
+        drawWheel();
     </script>
 </body>
 </html>
