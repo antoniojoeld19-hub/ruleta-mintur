@@ -20,27 +20,28 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)),
-                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%25" stop-color="%238faec4"/><stop offset="40%25" stop-color="%23d6e5ef"/><stop offset="60%25" stop-color="%238fa382"/><stop offset="100%25" stop-color="%232c451b"/></linearGradient></defs><rect width="800" height="1200" fill="url(%23sky)"/><path d="M-100,500 Q200,350 400,480 T900,450 L900,1200 L-100,1200 Z" fill="%23436024"/><path d="M-100,600 Q150,450 450,580 T900,550 L900,1200 L-100,1200 Z" fill="%232d4716"/></svg>');
+            /* Carga tu imagen de fondo (fondo.png) */
+            background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.35)),
+                        url('fondo.png') no-repeat center center;
             background-size: cover;
-            background-position: center;
             overflow: hidden;
             padding: 20px 10px;
             color: white;
         }
 
+        /* Título superior colocado por código */
         .header-title {
-            font-size: clamp(2.3rem, 7.5vw, 4rem);
+            font-size: clamp(2.5rem, 8vw, 4.2rem);
             color: #ffffff;
             text-align: center;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-shadow: 
                 3px 3px 0px #000,
-                -2px -2px 0px #000,
-                2px -2px 0px #000,
-                -2px 2px 0px #000,
-                0px 4px 10px rgba(0,0,0,0.7);
-            margin-top: 10px;
+                -3px -3px 0px #000,
+                3px -3px 0px #000,
+                -3px 3px 0px #000,
+                0px 6px 14px rgba(0,0,0,0.8);
+            margin-top: 15px;
             text-transform: uppercase;
         }
 
@@ -54,26 +55,30 @@
             justify-content: center;
         }
 
+        /* Flecha verde colocada por código arriba de la ruleta */
         .pointer {
             position: absolute;
-            top: -28px;
+            top: -26px;
             left: 50%;
             transform: translateX(-50%);
-            width: 46px;
-            height: 46px;
+            width: 50px;
+            height: 50px;
             z-index: 10;
-            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.6));
+            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.8));
         }
 
-        canvas {
+        /* Ruleta PNG cargada y lista para girar */
+        .wheel-img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
             border-radius: 50%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 0 4px rgba(255,255,255,0.2);
+            filter: drop-shadow(0px 10px 25px rgba(0,0,0,0.85));
+            transition: transform 0s;
         }
 
         .controls {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -85,10 +90,10 @@
             color: #000000;
             font-family: 'Impact', sans-serif;
             font-size: 1.8rem;
-            padding: 14px 48px;
+            padding: 14px 50px;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.6), inset 0 2px 0 rgba(255,255,255,0.6);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.7), inset 0 2px 0 rgba(255,255,255,0.8);
             text-shadow: 0 1px 0 rgba(255,255,255,0.5);
             letter-spacing: 2px;
             transition: transform 0.1s, filter 0.2s;
@@ -97,24 +102,20 @@
 
         .spin-btn:active {
             transform: scale(0.94);
-            filter: brightness(0.9);
         }
 
         .spin-btn:disabled {
-            background: #666666;
+            background: #555555;
             border-color: #888888;
-            color: #ccc;
-            cursor: not-allowed;
+            color: #aaa;
             box-shadow: none;
         }
 
+        /* Modal emergente con el resultado */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85);
             z-index: 100;
             align-items: center;
@@ -132,7 +133,7 @@
             max-width: 340px;
             width: 90%;
             box-shadow: 0 20px 50px rgba(0,0,0,0.9);
-            animation: popup 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: popup 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes popup {
@@ -141,18 +142,17 @@
         }
 
         .modal-title {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #94a3b8;
             margin-bottom: 10px;
             font-family: Arial, sans-serif;
-            text-transform: uppercase;
         }
 
         .modal-result {
             font-size: 2.2rem;
             color: #ffffff;
             margin: 15px 0;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
             line-height: 1.2;
         }
 
@@ -160,7 +160,7 @@
             background: #ffd700;
             color: #000;
             border: none;
-            padding: 12px 30px;
+            padding: 12px 32px;
             font-size: 1.2rem;
             font-family: 'Impact', sans-serif;
             border-radius: 30px;
@@ -174,13 +174,15 @@
     <h1 class="header-title">RULETA MINTUR</h1>
 
     <div class="wheel-container">
+        <!-- SVG de la flecha indicadora verde de tu diseño -->
         <svg class="pointer" viewBox="0 0 60 60">
             <polygon points="30,55 5,10 55,10" fill="#ffffff" stroke="#2d5a27" stroke-width="8" stroke-linejoin="round"/>
             <polygon points="30,48 10,13 50,13" fill="#ffffff"/>
             <polygon points="30,40 16,16 44,16" fill="none" stroke="#2d5a27" stroke-width="4"/>
         </svg>
         
-        <canvas id="canvas" width="800" height="800"></canvas>
+        <!-- Imagen de tu ruleta PNG -->
+        <img id="wheelImg" class="wheel-img" src="ruleta.png" alt="Ruleta Mintur">
     </div>
 
     <div class="controls">
@@ -189,7 +191,7 @@
 
     <div class="modal" id="resultModal">
         <div class="modal-content">
-            <div class="modal-title">¡Resultado!</div>
+            <div class="modal-title">¡RESULTADO!</div>
             <div class="modal-result" id="resultText">PREMIO 1</div>
             <button class="close-btn" onclick="cerrarModal()">ACEPTAR</button>
         </div>
@@ -198,32 +200,33 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
+        const wheelImg = document.getElementById('wheelImg');
         const spinBtn = document.getElementById('spinBtn');
         const modal = document.getElementById('resultModal');
         const resultText = document.getElementById('resultText');
 
+        // Los 12 sectores ordenados exactamente en sentido horario tal como están en tu imagen
         const slices = [
-            { text: "NADA", color: "#e31e24", type: "nada" },
-            { text: "Trabalenguas súper difícil", color: "#ff7900", type: "reto" },
-            { text: "PREMIO 2", color: "#ffeb00", type: "premio2" },
-            { text: "PREGUNTA", color: "#009944", type: "pregunta" },
-            { text: "Trabalenguas", color: "#1d4099", type: "reto" },
-            { text: "ACENTO VIAJERO", color: "#7e2382", type: "reto" },
-            { text: "NADA", color: "#e31e24", type: "nada" },
-            { text: "Intenta de nuevo", color: "#ff7900", type: "nada" },
-            { text: "PREMIO 1", color: "#ffeb00", type: "premio1" },
-            { text: "PREGUNTA", color: "#009944", type: "pregunta" },
-            { text: "Maleta express", color: "#1d4099", type: "reto" },
-            { text: "CANCIÓN VENEZOLANA", color: "#7e2382", type: "reto" }
+            { text: "NADA", type: "nada" },
+            { text: "Trabalenguas súper difícil", type: "reto" },
+            { text: "PREMIO 2", type: "premio2" },
+            { text: "PREGUNTA", type: "pregunta" },
+            { text: "Trabalenguas", type: "reto" },
+            { text: "ACENTO VIAJERO", type: "reto" },
+            { text: "NADA", type: "nada" },
+            { text: "Intenta de nuevo", type: "nada" },
+            { text: "PREMIO 1", type: "premio1" },
+            { text: "PREGUNTA", type: "pregunta" },
+            { text: "Maleta express", type: "reto" },
+            { text: "CANCIÓN VENEZOLANA", type: "reto" }
         ];
 
         const totalSlices = slices.length;
-        const sliceAngle = (2 * Math.PI) / totalSlices;
-        let currentAngle = 0;
+        const sliceAngle = 360 / totalSlices;
+        let currentRotation = 0;
         let isSpinning = false;
 
+        // Sonidos Web Audio API
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playTick() {
@@ -231,8 +234,8 @@
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.type = 'triangle';
-            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.04);
+            osc.frequency.setValueAtTime(420, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(90, audioCtx.currentTime + 0.04);
             gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
             gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
             osc.connect(gain);
@@ -243,83 +246,26 @@
 
         function playWinSound() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            const notes = [400, 500, 600, 800];
+            const notes = [440, 554, 659, 880];
             notes.forEach((freq, index) => {
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.1);
                 gain.gain.setValueAtTime(0.3, audioCtx.currentTime + index * 0.1);
-                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + index * 0.1 + 0.2);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + index * 0.1 + 0.25);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.start(audioCtx.currentTime + index * 0.1);
-                osc.stop(audioCtx.currentTime + index * 0.1 + 0.2);
+                osc.stop(audioCtx.currentTime + index * 0.1 + 0.25);
             });
         }
 
-        function drawWheel() {
-            const width = canvas.width;
-            const center = width / 2;
-            const radius = center - 16;
-
-            ctx.clearRect(0, 0, width, width);
-
-            // Borde exterior negro
-            ctx.beginPath();
-            ctx.arc(center, center, radius + 12, 0, 2 * Math.PI);
-            ctx.fillStyle = '#0f172a';
-            ctx.fill();
-
-            for (let i = 0; i < totalSlices; i++) {
-                const angle = currentAngle + i * sliceAngle;
-
-                ctx.beginPath();
-                ctx.moveTo(center, center);
-                ctx.arc(center, center, radius, angle, angle + sliceAngle);
-                ctx.closePath();
-                ctx.fillStyle = slices[i].color;
-                ctx.fill();
-                ctx.lineWidth = 5;
-                ctx.strokeStyle = '#ffffff';
-                ctx.stroke();
-
-                ctx.save();
-                ctx.translate(center, center);
-                ctx.rotate(angle + sliceAngle / 2);
-                ctx.textAlign = "right";
-                
-                // Configuración de texto
-                ctx.font = "bold 28px 'Impact', 'Arial Black', sans-serif";
-
-                // DIBUJAR BORDE NEGRO ALREDEDOR DEL TEXTO
-                ctx.lineWidth = 6;
-                ctx.strokeStyle = "#000000";
-                ctx.lineJoin = "miter";
-                ctx.miterLimit = 2;
-                ctx.strokeText(slices[i].text, radius - 30, 10);
-
-                // RELLENO DEL TEXTO (Blanco puro sobre el borde negro)
-                ctx.fillStyle = "#ffffff";
-                ctx.fillText(slices[i].text, radius - 30, 10);
-
-                ctx.restore();
-            }
-
-            // Círculo central blanco
-            ctx.beginPath();
-            ctx.arc(center, center, 42, 0, 2 * Math.PI);
-            ctx.fillStyle = '#ffffff';
-            ctx.fill();
-            ctx.lineWidth = 4;
-            ctx.strokeStyle = '#333333';
-            ctx.stroke();
-        }
-
+        // Lógica de probabilidades (5% premios, 35% nada/intenta, 60% retos/preguntas)
         function seleccionarIndiceGanador() {
             const rand = Math.random() * 100;
 
             if (rand < 5) {
-                return Math.random() < 0.5 ? 8 : 2; 
+                return Math.random() < 0.5 ? 8 : 2; // PREMIO 1 o PREMIO 2
             } else if (rand < 40) {
                 const nadaIndices = [0, 6, 7];
                 return nadaIndices[Math.floor(Math.random() * nadaIndices.length)];
@@ -337,40 +283,42 @@
             spinBtn.disabled = true;
 
             const targetIndex = seleccionarIndiceGanador();
-            const targetSliceAngle = targetIndex * sliceAngle + sliceAngle / 2;
-            let targetAngle = (3 * Math.PI / 2) - targetSliceAngle;
             
-            const extraRounds = 5 + Math.floor(Math.random() * 3);
-            targetAngle += extraRounds * 2 * Math.PI;
+            // Ángulo para centrar la casilla bajo la flecha de arriba
+            const targetSliceCenter = targetIndex * sliceAngle + sliceAngle / 2;
+            let targetDegree = 360 - targetSliceCenter;
+            
+            // Añadir 6 vueltas completas
+            const extraRounds = 6 * 360;
+            const finalRotation = currentRotation + (360 - (currentRotation % 360)) + extraRounds + targetDegree;
 
-            const startAngle = currentAngle % (2 * Math.PI);
-            const totalRotation = targetAngle - startAngle;
-
-            const duration = 4500;
+            const duration = 4800;
             const startTime = performance.now();
             let lastTickSlice = -1;
 
             function animate(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
+                
+                // Animación suave de desaceleración (Ease-out)
                 const easeOut = 1 - Math.pow(1 - progress, 3);
                 
-                currentAngle = startAngle + totalRotation * easeOut;
+                const degrees = currentRotation + (finalRotation - currentRotation) * easeOut;
+                wheelImg.style.transform = `rotate(${degrees}deg)`;
 
-                const currentPointerAngle = (3 * Math.PI / 2 - currentAngle) % (2 * Math.PI);
-                const normalizedPointerAngle = (currentPointerAngle + 2 * Math.PI) % (2 * Math.PI);
-                const currentSlice = Math.floor(normalizedPointerAngle / sliceAngle);
+                // Sonido de ticks al pasar cada casilla
+                const currentPointerAngle = (360 - (degrees % 360)) % 360;
+                const currentSlice = Math.floor(currentPointerAngle / sliceAngle);
 
                 if (currentSlice !== lastTickSlice) {
                     playTick();
                     lastTickSlice = currentSlice;
                 }
 
-                drawWheel();
-
                 if (progress < 1) {
                     requestAnimationFrame(animate);
                 } else {
+                    currentRotation = finalRotation;
                     finalizarGiro(slices[targetIndex]);
                 }
             }
@@ -387,8 +335,8 @@
             if (resultado.type.includes('premio')) {
                 playWinSound();
                 confetti({
-                    particleCount: 120,
-                    spread: 80,
+                    particleCount: 140,
+                    spread: 85,
                     origin: { y: 0.6 }
                 });
             }
@@ -399,8 +347,6 @@
         function cerrarModal() {
             modal.style.display = 'none';
         }
-
-        drawWheel();
     </script>
 </body>
 </html>
