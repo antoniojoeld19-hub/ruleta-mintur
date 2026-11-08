@@ -204,7 +204,6 @@
         const modal = document.getElementById('resultModal');
         const resultText = document.getElementById('resultText');
 
-        // Sectores actualizados según tu nueva imagen (en sentido horario)
         const slices = [
             { text: "NADA", color: "#e31e24", type: "nada" },
             { text: "Trabalenguas súper difícil", color: "#ff7900", type: "reto" },
@@ -265,7 +264,7 @@
 
             ctx.clearRect(0, 0, width, width);
 
-            // Borde exterior
+            // Borde exterior negro
             ctx.beginPath();
             ctx.arc(center, center, radius + 12, 0, 2 * Math.PI);
             ctx.fillStyle = '#0f172a';
@@ -288,20 +287,25 @@
                 ctx.translate(center, center);
                 ctx.rotate(angle + sliceAngle / 2);
                 ctx.textAlign = "right";
-                ctx.fillStyle = "#ffffff";
-                // Ajustar tamaño de fuente si el texto es largo
+                
+                // Configuración de texto
                 ctx.font = "bold 28px 'Impact', 'Arial Black', sans-serif";
 
-                ctx.shadowColor = "rgba(0,0,0,0.8)";
-                ctx.shadowOffsetX = 2;
-                ctx.shadowOffsetY = 2;
-                ctx.shadowBlur = 3;
+                // DIBUJAR BORDE NEGRO ALREDEDOR DEL TEXTO
+                ctx.lineWidth = 6;
+                ctx.strokeStyle = "#000000";
+                ctx.lineJoin = "miter";
+                ctx.miterLimit = 2;
+                ctx.strokeText(slices[i].text, radius - 30, 10);
 
+                // RELLENO DEL TEXTO (Blanco puro sobre el borde negro)
+                ctx.fillStyle = "#ffffff";
                 ctx.fillText(slices[i].text, radius - 30, 10);
+
                 ctx.restore();
             }
 
-            // Círculo central
+            // Círculo central blanco
             ctx.beginPath();
             ctx.arc(center, center, 42, 0, 2 * Math.PI);
             ctx.fillStyle = '#ffffff';
@@ -311,19 +315,15 @@
             ctx.stroke();
         }
 
-        // Probabilidades: 5% premios, 35% nada/intenta, 60% retos/preguntas
         function seleccionarIndiceGanador() {
             const rand = Math.random() * 100;
 
             if (rand < 5) {
-                // 5% PREMIO (Premio 1 o Premio 2)
                 return Math.random() < 0.5 ? 8 : 2; 
             } else if (rand < 40) {
-                // 35% NADA / INTENTA DE NUEVO (índices 0, 6, 7)
                 const nadaIndices = [0, 6, 7];
                 return nadaIndices[Math.floor(Math.random() * nadaIndices.length)];
             } else {
-                // 60% RETOS Y PREGUNTAS (índices 1, 3, 4, 5, 9, 10, 11)
                 const otrosIndices = [1, 3, 4, 5, 9, 10, 11];
                 return otrosIndices[Math.floor(Math.random() * otrosIndices.length)];
             }
